@@ -72,7 +72,7 @@ async function run() {
             });
             res.cookie('token', token, {
                     httpOnly: true,
-                    secure: true
+                    secure: false
             }) 
             .send({success: true})
         })
@@ -90,7 +90,7 @@ async function run() {
 
         app.get('/services/:id', async (req, res) => {
             const id = req.params.id;
-            const query = { _id: new ObjectId(id) }
+            const query = { _id: new ObjectId(id) }  
 
             const options = {
                 // Include only the `title` and `imdb` fields in the returned document
