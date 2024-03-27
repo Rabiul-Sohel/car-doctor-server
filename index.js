@@ -24,26 +24,26 @@ app.use(cookieParser());
 
 
 
-const logger = (req, res, next) => {
-    console.log('log: info',req.method, req.url);
-    next()
-}
+// const logger = (req, res, next) => {
+//     console.log('log: info',req.method, req.url);
+//     next()
+// }
 
-const verifyToken = (req, res, next) => {
-    const token = req.cookies?.token;
-    if (!token) {
-        return res.status(401).send({message: 'Not authorized'})
-    }
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-        if (err) {
-           return res.status(401).send({ message: "Not authorized" });
-        }
-        req.user = decoded;
-        next();
-    })
+// const verifyToken = (req, res, next) => {
+//     const token = req.cookies?.token;
+//     if (!token) {
+//         return res.status(401).send({message: 'Not authorized'})
+//     }
+//     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+//         if (err) {
+//            return res.status(401).send({ message: "Not authorized" });
+//         }
+//         req.user = decoded;
+//         next();
+//     })
     
     // next()
-}
+// }
 
 
 
@@ -73,7 +73,7 @@ async function run() {
             });
             res.cookie('token', token, {
                     httpOnly: true,
-                    secure: true
+                    secure: false
             }) 
             .send({success: true})
         })
@@ -104,17 +104,17 @@ async function run() {
 
 
         // bookings 
-        app.get('/bookings', verifyToken, async (req, res) => {
+        app.get('/bookings', async (req, res) => {
             
-            if (req.user.email == req.query?.email) {
-                return res.status(403).send({message: 'Forbidden'})
-            }
-            console.log(query);
-            let query = {};
-            if (req.query.email) {
-                query = { email: req.query?.email }
-            }
-            const result = await bookingCollection.find(query).toArray();
+            // if (req.user.email == req.query?.email) {
+            //     return res.status(403).send({message: 'Forbidden'})
+            // }
+            // console.log(query);
+            // let query = {};
+            // if (req.query.email) {
+            //     query = { email: req.query?.email }
+            // }
+            const result = await bookingCollection.find().toArray();
             res.send(result); 
         })
 
