@@ -104,11 +104,11 @@ async function run() {
 
 
         // bookings 
-        app.get('/bookings', async (req, res) => {
+        app.get('/bookings', verifyToken, async (req, res) => {
             
-            // if (req.user.email == req.query?.email) {
-            //     return res.status(403).send({message: 'Forbidden'})
-            // }
+            if (req.user.email !== req.query?.email) {
+                return res.status(403).send({message: 'Forbidden'})
+            } 
             // console.log(query);
             console.log(req.cookies.token);
             let query = {};
