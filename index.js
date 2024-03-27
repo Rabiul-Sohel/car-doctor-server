@@ -11,11 +11,12 @@ const port = process.env.PORT || 5000;
 app.use(
   cors({
     origin: [
-        // "http://localhost:5173",
-      "https://car-doctos.web.app/",
-      "https://car-doctos.firebaseapp.com/",
+      "http://localhost:5173",
+      //   "https://car-doctos.web.app/",
+      //   "https://car-doctos.firebaseapp.com/",
     ],
-    credentials: true,
+    credentials: false,
+    // optionSuccessStatus: 200,
   })
 );
 app.use(express.json());  
