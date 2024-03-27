@@ -39,10 +39,10 @@ const verifyToken = (req, res, next) => {
            return res.status(401).send({ message: "Not authorized" });
         }
         req.user = decoded;
-        next();
+        // next();
     })
     
-    // next()
+    next()
 }
 
 
@@ -109,11 +109,10 @@ async function run() {
             if (req.user.email !== req.query?.email) {
                 return res.status(403).send({message: 'Forbidden'})
             } 
-            // console.log(query);
-            console.log(req.cookies.token);
+            console.log(req.query.email); 
             let query = {};
             if (req.query.email) {
-                query = { email: req.query?.email }
+                query = { email: req.query?.email };
             }
             const result = await bookingCollection.find(query).toArray();
             res.send(result); 
