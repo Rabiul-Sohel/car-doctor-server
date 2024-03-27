@@ -15,7 +15,7 @@ app.use(
       //   "https://car-doctos.web.app/",
       //   "https://car-doctos.firebaseapp.com/",
     ],
-    credentials: true,
+    credentials: true
     // optionSuccessStatus: 200,
   })
 );
@@ -39,10 +39,10 @@ const verifyToken = (req, res, next) => {
            return res.status(401).send({ message: "Not authorized" });
         }
         req.user = decoded;
-        // next();
+        next();
     })
     
-    next()
+    // next()
 }
 
 
@@ -72,8 +72,8 @@ async function run() {
               expiresIn: '1h',
             });
             res.cookie('token', token, {
-                    httpOnly: true,
-                    secure: false
+                httpOnly: true,
+                secure: false
             }) 
             .send({success: true})
         })
@@ -104,11 +104,11 @@ async function run() {
 
 
         // bookings 
-        app.get('/bookings', verifyToken, async (req, res) => {
+        app.get('/bookings', async (req, res) => {
             
-            if (req.user.email !== req.query?.email) {
-                return res.status(403).send({message: 'Forbidden'})
-            } 
+            // if (req.user.email !== req.query?.email) {
+            //     return res.status(403).send({message: 'Forbidden'})
+            // } 
             console.log(req.query.email); 
             let query = {};
             if (req.query.email) {
