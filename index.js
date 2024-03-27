@@ -15,7 +15,7 @@ app.use(
       //   "https://car-doctos.web.app/",
       //   "https://car-doctos.firebaseapp.com/",
     ],
-    credentials: false,
+    credentials: true,
     // optionSuccessStatus: 200,
   })
 );
@@ -29,21 +29,21 @@ app.use(cookieParser());
 //     next()
 // }
 
-// const verifyToken = (req, res, next) => {
-//     const token = req.cookies?.token;
-//     if (!token) {
-//         return res.status(401).send({message: 'Not authorized'})
-//     }
-//     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-//         if (err) {
-//            return res.status(401).send({ message: "Not authorized" });
-//         }
-//         req.user = decoded;
-//         next();
-//     })
+const verifyToken = (req, res, next) => {
+    const token = req.cookies?.token;
+    if (!token) {
+        return res.status(401).send({message: 'Not authorized'})
+    }
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+        if (err) {
+           return res.status(401).send({ message: "Not authorized" });
+        }
+        req.user = decoded;
+        next();
+    })
     
     // next()
-// }
+}
 
 
 
@@ -110,6 +110,7 @@ async function run() {
             //     return res.status(403).send({message: 'Forbidden'})
             // }
             // console.log(query);
+            console.log(req.cookies.token);
             let query = {};
             if (req.query.email) {
                 query = { email: req.query?.email }
