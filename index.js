@@ -104,7 +104,7 @@ async function run() {
 
 
         // bookings 
-        app.get('/bookings', verifyToken, async (req, res) => {
+        app.get('/bookings', async (req, res) => {
             
             // if (req.user.email !== req.query?.email) {
             //     return res.status(403).send({message: 'Forbidden'})
